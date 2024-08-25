@@ -33,6 +33,7 @@
 
 // ];
 
+import {cart} from '../scripts/cart.js'
 
 
 let productsHTML = '';
@@ -63,7 +64,7 @@ products.forEach((product)=>{
     </div>
 
     <div class="product-quantity-container">
-      <select>
+      <select class="js-product-quantity">
         <option selected value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -99,46 +100,61 @@ products.forEach((product)=>{
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
+
+
+// To target a certain button from the html. Fk that's incredibly important.
+// document.querySelectorAll('.js-add-to-cart')
+//   .forEach((button)=>{
+//     button.addEventListener('click', ()=>{
+//       alert('something');
+//     })
+//   });
+
+
+
+
+
+
+
+
 document.querySelectorAll('.js-add-to-cart')
-  .forEach((button=>{
-    button.addEventListener('click', ()=>{
+  .forEach((button) => {
+    button.addEventListener('click', () => {
       const productId = button.dataset.productId;
 
-      productId;
-
+      // Retrieve the correct product container
+      const productContainer = button.closest('.product-container');
+      
+      // Retrieve the selected quantity
+      const quantitySelect = productContainer.querySelector('.js-product-quantity');
+      const selectedQuantity = parseInt(quantitySelect.value);
 
       let matchingItem;
 
-      cart.forEach((item)=>{
-        if (productId===item.productId){
+      cart.forEach((item) => {
+        if (productId === item.productId) {
           matchingItem = item;
         }
       });
 
-      if(matchingItem){
-        matchingItem.quantity+=1;
-      }else{
-       
+      if (matchingItem) {
+        matchingItem.quantity += selectedQuantity;
+      } else {
         cart.push({
           productName: productId,
-          quantity: 1
-        }); 
+          quantity: selectedQuantity
+        });
       }
-
-
 
       let cartQuantity = 0;
 
-      cart.forEach((item)=>{
-        cartQuantity+=item.quantity;
+      cart.forEach((item) => {
+        cartQuantity += item.quantity;
       });
 
-
       document.querySelector('.cart-quantity').innerHTML = cartQuantity;
+    });
+  });
 
 
-
-
-    })
-  }))
 
