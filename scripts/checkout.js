@@ -45,7 +45,9 @@ cart.forEach((cartItem)=>{
             <span class="update-quantity-link link-primary">
               Update
             </span>
-            <span class="delete-quantity-link link-primary">
+            <span class="delete-quantity-link link-primary js-delete-link
+            data-product-id="${matchingProduct.id}
+            ">
               Delete
             </span>
           </div>
@@ -106,4 +108,15 @@ cart.forEach((cartItem)=>{
 
 document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
 
-console.log(cartSummaryHTML);
+
+
+// How to target a certain button remember.
+
+document.querySelectorAll('.js-delete-link')
+  .forEach((link)=>{
+    link.addEventListener('click', () =>{
+      alert('something');
+      
+    });
+});
+
